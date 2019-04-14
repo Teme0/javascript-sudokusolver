@@ -1,0 +1,83 @@
+.buttonReset:hover {
+    background-color: red;
+    color: white;
+  }
+  .buttonReset {
+    background-color: white; 
+    color: black; 
+    border: 2px solid red;
+    position: absolute;
+      top: 470px; left: 20px;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  .crossMethod:hover {
+    background-color: red;
+    color: white;
+  }
+  .crossMethod {
+    background-color: white; 
+    color: black; 
+    border: 2px solid red;
+    position: absolute;
+      top: 470px; left: 120px;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  .lineMethod:hover {
+    background-color: red;
+    color: white;
+  }
+  .lineMethod {
+    background-color: white; 
+    color: black; 
+    border: 2px solid red;
+    position: absolute;
+      top: 470px; left: 250px;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+
+  
+
+  .oneSmallNum:hover {
+    background-color: red;
+    color: white;
+  }
+  .oneSmallNum {
+    background-color: white; 
+    color: black; 
+    border: 2px solid red;
+    position: absolute;
+      top: 470px; left: 350px;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
