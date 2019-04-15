@@ -7,8 +7,8 @@
     color: black; 
     border: 2px solid red;
     position: absolute;
-      top: 470px; left: 20px;
-    padding: 16px 32px;
+    top: 470px; left: 12px;
+    padding: 6px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -27,8 +27,8 @@
     color: black; 
     border: 2px solid red;
     position: absolute;
-      top: 470px; left: 120px;
-    padding: 16px 32px;
+    top: 470px; left: 120px;
+    padding: 12px 5px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -47,8 +47,8 @@
     color: black; 
     border: 2px solid red;
     position: absolute;
-      top: 470px; left: 250px;
-    padding: 16px 32px;
+    top: 470px; left: 230px;
+    padding: 12px 5px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -70,8 +70,29 @@
     color: black; 
     border: 2px solid red;
     position: absolute;
-      top: 470px; left: 350px;
-    padding: 16px 32px;
+    top: 470px; left: 329px;
+    padding: 12px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+
+  .pairMethod:hover {
+    background-color: red;
+    color: white;
+  }
+  .pairMethod {
+    background-color: white; 
+    color: black; 
+    border: 2px solid red;
+    position: absolute;
+    top: 470px; left: 415px;
+    padding: 12px 5px;
     text-align: center;
     text-decoration: none;
     display: inline-block;

@@ -147,3 +147,67 @@ function lineMethod(){
     }
   }
 }
+
+function pairMethod(){
+  let storeArray=[];
+  let count=0;
+  let hori=0;
+  let vert=0;
+
+  for(let j=0; j<9; j++){  //loop numbers
+    for(let k=1; k<10; k++){   //loop boxes
+      for(let i=0; i<numObjects.length; i++){ //loop objects
+
+         if(numObjects[i].smallNum[j] && numObjects[i].boxB==k){  //counts all smallnumber j:s in box k and saves the locations in array
+          storeArray.push(i);
+          count++;
+          
+      }
+    }
+   
+    if (count>1 && count <4){   // 2 or 3 smallNum j in box k ==> pairMethod possible if they are all lined vertically or horizontally
+      //next 4 sections are practically the same but 2/3 numbers and hori/vert line
+       if (storeArray.length==2){ //smallNums in hori/vert line inside box. 2 or 3
+        if (numObjects[storeArray[0]].horiL ==numObjects[storeArray[1]].horiL){  //smallNums are horizontal
+            hori=numObjects[storeArray[0]].horiL;
+            for(let i=0; i<numObjects.length; i++){
+                if(numObjects[i].horiL==hori && i!=storeArray[0] && i!=storeArray[1]){ //removes smallNums J from the horizontal line but not the original 2
+                    numObjects[i].smallNum[j]=false;
+                }
+            }
+        }
+
+        if (numObjects[storeArray[0]].vertL ==numObjects[storeArray[1]].vertL){
+          vert=numObjects[storeArray[0]].vertL;
+          for(let i=0; i<numObjects.length; i++){
+              if(numObjects[i].vertL==vert && i!=storeArray[0] && i!=storeArray[1]){
+                  numObjects[i].smallNum[j]=false;
+              }
+          }
+        }
+       }
+       if (storeArray.length==3){
+        if (numObjects[storeArray[0]].horiL==numObjects[storeArray[1]].horiL && numObjects[storeArray[0]].horiL==numObjects[storeArray[2]].horiL){
+          hori=numObjects[storeArray[0]].horiL;
+          for(let i=0; i<numObjects.length; i++){
+              if(numObjects[i].horiL==hori && i!=storeArray[0] && i!=storeArray[1] && i!=storeArray[2]){
+                  numObjects[i].smallNum[j]=false;
+              }
+          }      
+        }
+        if (numObjects[storeArray[0]].vertL ==numObjects[storeArray[1]].vertL && numObjects[storeArray[0]].vertL==numObjects[storeArray[2]].vertL){
+          vert=numObjects[storeArray[0]].vertL;
+          for(let i=0; i<numObjects.length; i++){
+              if(numObjects[i].vertL==vert && i!=storeArray[0] && i!=storeArray[1] && i!=storeArray[2]){
+                  numObjects[i].smallNum[j]=false;
+              }
+          }         
+        }
+       }
+    } 
+    storeArray=[];
+    count=0;
+      
+    }
+  }
+}
