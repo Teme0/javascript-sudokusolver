@@ -19,13 +19,13 @@
     cursor: pointer;
   }
   .crossMethod:hover {
-    background-color: red;
+    background-color: blue;
     color: white;
   }
   .crossMethod {
     background-color: white; 
     color: black; 
-    border: 2px solid red;
+    border: 2px solid blue;
     position: absolute;
     top: 470px; left: 120px;
     padding: 12px 5px;
@@ -39,13 +39,13 @@
     cursor: pointer;
   }
   .lineMethod:hover {
-    background-color: red;
+    background-color: blue;
     color: white;
   }
   .lineMethod {
     background-color: white; 
     color: black; 
-    border: 2px solid red;
+    border: 2px solid blue;
     position: absolute;
     top: 470px; left: 230px;
     padding: 12px 5px;
@@ -62,13 +62,13 @@
   
 
   .oneSmallNum:hover {
-    background-color: red;
+    background-color: blue;
     color: white;
   }
   .oneSmallNum {
     background-color: white; 
     color: black; 
-    border: 2px solid red;
+    border: 2px solid blue;
     position: absolute;
     top: 470px; left: 329px;
     padding: 12px 5px;
@@ -83,13 +83,13 @@
   }
 
   .pairMethod:hover {
-    background-color: red;
+    background-color: blue;
     color: white;
   }
   .pairMethod {
     background-color: white; 
     color: black; 
-    border: 2px solid red;
+    border: 2px solid blue;
     position: absolute;
     top: 470px; left: 415px;
     padding: 12px 5px;
@@ -102,3 +102,48 @@
     transition-duration: 0.4s;
     cursor: pointer;
   }
+  
+  .bruteMethod:hover {
+    background-color: green;
+    color: white;
+  }
+  .bruteMethod {
+    background-color: white; 
+    color: black; 
+    border: 2px solid green;
+    position: absolute;
+    top: 470px; left: 512px;
+    padding: 12px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+
+
+
+
+
+  .dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+
+
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropDown {
+    position: absolute;
+    display: inline-block;
+    top: 520px; left: 12px;
+  }
+  

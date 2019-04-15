@@ -17,9 +17,18 @@
       <button class="button buttonReset" id="reset" type="button" value="reset" onclick="resetFunction();">Reset</button>
       <button class="button crossMethod" id="cross" type="button" value="cross" onclick="crossMethod();">Crossmethod</button>
       <button class="button lineMethod" id="line" type="button" value="line" onclick="lineMethod();">Linemethod</button>
-      <button class="button oneSmallNum" id="line" type="button" value="smal" onclick="oneSmallNum();">Smallnum</button>
-      <button class="button pairMethod" id="line" type="button" value="pair" onclick="pairMethod();">Pairmethod</button>
+      <button class="button oneSmallNum" id="smal" type="button" value="smal" onclick="oneSmallNum();">Smallnum</button>
+      <button class="button pairMethod" id="pair" type="button" value="pair" onclick="pairMethod();">Pairmethod</button>
+      <button class="button bruteMethod" id="brute" type="button" value="brute" onclick="bruteMethod();">Brutemethod</button>
     </div>
+
+<select id="preSetSelector" class="dropDown" onchange="preSets()">
+<option value="0">Presets</option>
+<option value="1">Easy</option>
+<option value="2">Medium</option>
+<option value="3">Hard</option>
+</select>
+
 
     <script src="arrayOpt.js"></script>
     <script src="sketch.js"></script>

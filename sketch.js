@@ -14,17 +14,20 @@ var invalidVert=0;
 var invalidHori=0;
 var invalidBox=0;
 
-function setup() {
+function setup(preset) {
   var canvas = createCanvas(600, 462);
   let plusX=0;
   let plusY=0;
   let hori=1;
   let vert=1;
   let boxB=1;
+  let num=0;
 
   for(let i=1; i<82; i++){
-      
-      number = new createNumberSlot(18+plusX,25+plusY,0,hori,vert,boxB);
+      if(preset){
+        num=preset[i-1];
+      }
+      number = new createNumberSlot(18+plusX,25+plusY,0+num,hori,vert,boxB);
       plusX+=50;
       numObjects.push(number);
       vert++;
@@ -89,10 +92,61 @@ function drawLines() {
   
 
 }
-function resetFunction(){
+function resetFunction(preset){
   numObjects.splice(0,numObjects.length);
-  setup();
+  setup(preset);
   }
+
+  
+    function preSets() {
+      //Getting Value
+      var selObj = document.getElementById("preSetSelector");
+      var selValue = selObj.options[selObj.selectedIndex].value;
+      //Setting Value
+      let preset1= 			
+      [8,7,6,9,0,0,0,0,0, 			//requires boxline
+       0,1,0,0,0,6,0,0,0,
+       0,4,0,3,0,5,8,0,0,
+       4,0,0,0,0,0,2,1,0,
+       0,9,0,5,0,0,0,0,0,
+       0,5,0,0,4,0,3,0,6,
+       0,2,9,0,0,0,0,0,8,
+       0,0,4,6,9,0,1,7,3,
+       0,0,0,0,0,1,0,0,4];
+      let preset2= 			
+       [0,6,0,0,9,2,0,0,0, 			//requires boxline
+        0,2,0,0,3,7,0,0,6,
+        4,8,0,0,0,0,7,0,9,
+        5,4,0,0,7,0,0,0,0,
+        0,0,0,9,1,0,0,0,0,
+        0,0,9,0,0,0,0,8,1,
+        0,0,8,0,0,0,4,0,0,
+        0,0,4,5,0,0,0,3,0,
+        0,0,0,3,0,4,0,7,0];
+        let preset3=
+       [3,0,0, 0,0,0, 8,0,5, 
+				0,2,9, 0,0,0, 4,0,0,
+				0,0,0, 2,4,7, 0,0,0,			
+				0,0,3, 0,0,0, 0,0,8,		//req boxline and hidden pair 6,3 6,4
+				0,0,0, 0,5,0, 0,0,4,
+				0,1,0, 0,7,0, 6,0,0,
+				1,0,5, 0,0,9, 0,0,0,
+				4,0,0, 0,8,0, 0,1,0,
+        0,0,2, 0,0,0, 0,0,3];
+        
+      if(selValue==1){
+          resetFunction(preset1);
+      }
+      if(selValue==2){
+        resetFunction(preset2);
+      }
+      if(selValue==3){
+        resetFunction(preset3);
+      }
+      selObj.selectedIndex=0;
+  }
+  
+
 
 function draw() {
 

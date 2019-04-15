@@ -149,6 +149,7 @@ function lineMethod(){
 }
 
 function pairMethod(){
+  if(!validSudoku)return
   let storeArray=[];
   let count=0;
   let hori=0;
@@ -158,7 +159,7 @@ function pairMethod(){
     for(let k=1; k<10; k++){   //loop boxes
       for(let i=0; i<numObjects.length; i++){ //loop objects
 
-         if(numObjects[i].smallNum[j] && numObjects[i].boxB==k){  //counts all smallnumber j:s in box k and saves the locations in array
+         if(numObjects[i].number==j+1 && numObjects[i].boxB==k || numObjects[i].smallNum[j] && numObjects[i].boxB==k){  //counts all smallnumber j:s in box k and saves the locations in array
           storeArray.push(i);
           count++;
           
@@ -210,4 +211,42 @@ function pairMethod(){
       
     }
   }
+}
+
+
+  function bruteMethod(){
+    if(isComplete()) return true;
+    for(let i=0; i<numObjects.length; i++){
+      if(numObjects[i].number==0){
+        for (let j=1; j<10; j++){
+          validSudoku=true;
+          numObjects[i].setNumber(j);
+          checkValid();
+          if(validSudoku){
+            if(bruteMethod())return true;
+          }
+          numObjects[i].setNumber(0);
+          validSudoku=true;
+        }return false;
+      }
+    }
+  }
+
+
+
+
+function isComplete(){
+
+  if(!validSudoku) return false
+  
+  let count=0;
+  for(let i=0; i<numObjects.length; i++){
+    if(numObjects[i].number!=0){
+      count++;
+    }
+  }
+     if (count==81){
+      return true;
+    }
+    return false;
 }
