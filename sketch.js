@@ -52,9 +52,9 @@ function setup(preset) {
 function mouseClicked() {
   for(let i=0; i<numObjects.length; i++){
       if(mouseX>=numObjects[i].x-12 && mouseX<=numObjects[i].x+35 &&mouseY>=numObjects[i].y-19 && mouseY<=numObjects[i].y+28 ){
-        if(keyCode-48<=9 && keyCode-48>=0){
-          numObjects[i].setNumber(keyCode-48);
-        } 
+      
+          numObjects[i].setNumber(inputNum);
+        
        
       }
   }
