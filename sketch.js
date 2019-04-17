@@ -6,13 +6,9 @@ function preload() {
 }
 
 var numObjects=[];
-var number;
 var inputNum=0;
 var validSudoku=true;
-var invalidNum=0;
-var invalidVert=0;
-var invalidHori=0;
-var invalidBox=0;
+
 
 function setup(preset) {
   var canvas = createCanvas(600, 462);
@@ -27,7 +23,7 @@ function setup(preset) {
       if(preset){
         num=preset[i-1];
       }
-      number = new createNumberSlot(18+plusX,25+plusY,0+num,hori,vert,boxB);
+      var number = new createNumberSlot(18+plusX,25+plusY,0+num,hori,vert,boxB);
       plusX+=50;
       numObjects.push(number);
       vert++;
@@ -70,10 +66,13 @@ function mouseClicked() {
 }
 
 function keyPressed() {
-  if(keyCode-48<=9 && keyCode-48>=0){
+  if(keyCode-48<=9 && keyCode-48>=0){ //numbers
     inputNum=keyCode-48;
   }
-  
+  if(keyCode-96<=9 && keyCode-96>=0){ //numpad
+    inputNum=keyCode-96;
+  }
+  checkValid();
 
 }
 function drawLines() {
@@ -123,7 +122,7 @@ function resetFunction(preset){
         0,0,8,0,0,0,4,0,0,
         0,0,4,5,0,0,0,3,0,
         0,0,0,3,0,4,0,7,0];
-        let preset3=
+      let preset3=
        [3,0,0, 0,0,0, 8,0,5, 
 				0,2,9, 0,0,0, 4,0,0,
 				0,0,0, 2,4,7, 0,0,0,			
@@ -133,16 +132,45 @@ function resetFunction(preset){
 				1,0,5, 0,0,9, 0,0,0,
 				4,0,0, 0,8,0, 0,1,0,
         0,0,2, 0,0,0, 0,0,3];
+      let preset4=
+        [0,0,0, 0,0,0, 0,0,0, 
+         0,0,0, 0,0,3, 0,8,5,
+         0,0,1, 0,2,0, 0,0,0,			
+         0,0,0, 5,0,7, 0,0,0,		//anti backtrack that took ages to solve before improving my bruteforce.
+         0,0,4, 0,0,0, 1,0,0,
+         0,9,0, 0,0,0, 0,0,0,
+         5,0,0, 0,0,0, 0,7,3,
+         0,0,2, 0,1,0, 0,0,0,
+         0,0,0, 0,4,0, 0,0,9];
+      let preset5=
+        [8,0,0, 0,0,0, 0,0,0, 
+         0,0,3, 6,0,0, 0,0,0,
+         0,7,0, 0,9,0, 2,0,0,			
+         0,5,0, 0,0,7, 0,0,0,		//arto inkala
+         0,0,0, 0,4,5, 7,0,0,
+         0,0,0, 1,0,0, 0,3,0,
+         0,0,1, 0,0,0, 0,6,8,
+         0,0,8, 5,0,0, 0,1,0,
+         0,9,0, 0,0,0, 4,0,0];
         
-      if(selValue==1){
+      switch(selValue){
+        case "1":
           resetFunction(preset1);
+          break;
+        case "2":
+          resetFunction(preset2);
+          break;
+        case "3":
+          resetFunction(preset3);
+          break;
+        case "4":
+          resetFunction(preset4);
+          break;
+        case "5":
+          resetFunction(preset5);
+          break;
       }
-      if(selValue==2){
-        resetFunction(preset2);
-      }
-      if(selValue==3){
-        resetFunction(preset3);
-      }
+    
       selObj.selectedIndex=0;
   }
   

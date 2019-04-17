@@ -1,5 +1,5 @@
 "use strict";
-function checkValid(){
+function checkValid(){  //To do make the loop start with numObjects to make execution faster.
       let found= 0;
       let i=1;
       let l;
@@ -7,9 +7,6 @@ function checkValid(){
       validSudoku=true;
       let jSave=0;
 
-      for(j=0; j<numObjects.length; j++){ // all objects
-        numObjects[j].invalid=false;
-      }
 
       for(i=1; i<10; i++){ //all numbers
         jSave=0;
@@ -66,7 +63,10 @@ function checkValid(){
 }
 
 function oneSmallNum(){
-  if(!validSudoku)return
+  if(!validSudoku)return [];
+  let changes=[];
+  let changeDetails=[];
+
   let adder=0;
   let saved=null;
   for(let i=0; i<numObjects.length; i++){
@@ -78,10 +78,13 @@ function oneSmallNum(){
     }
     if(adder==1){
       numObjects[i].setNumber(saved+1);
+      changeDetails=[i, saved+1];
+      changes.push(changeDetails);
     }
     adder=0;
     saved=null;
   }
+  return changes;
 }
 function crossMethod(){
   if(!validSudoku)return
@@ -102,13 +105,15 @@ function isValidNumber(i){
 }
 
 function lineMethod(){
-  if(!validSudoku)return
+  if(!validSudoku)return []
   let timesHori=0;
   let timesVert=0;
   let timesBox=0;
   let horiS=null;
   let vertiS=null;
   let boxS=null;
+  let changes=[];
+  let changeDetails=[];
 
   for(let j=0; j<9; j++){ //loops all numbers
     for(let k=1; k<10; k++){ //loops all rows/lines/boxes
@@ -131,14 +136,20 @@ function lineMethod(){
 
      
       }
-      if(timesHori==1){
+      if(timesHori==1 && numObjects[horiS].number==0){  //&& numObjects[horiS].number==0  was added just so changes -array doesn't have results that already had a number
         numObjects[horiS].setNumber(j+1);
+        changeDetails=[horiS, j+1];
+        changes.push(changeDetails);
       }
-      if(timesVert==1){
+      if(timesVert==1 && numObjects[vertiS].number==0){
         numObjects[vertiS].setNumber(j+1);
+        changeDetails=[vertiS, j+1];
+        changes.push(changeDetails);
       }
-      if(timesBox==1){
+      if(timesBox==1 && numObjects[boxS].number==0){
         numObjects[boxS].setNumber(j+1);
+        changeDetails=[boxS, j+1];
+        changes.push(changeDetails);
       }
       
       timesHori=0;  //checking next hori/verti/box so adders should be 0
@@ -146,6 +157,7 @@ function lineMethod(){
       timesBox=0;
     }
   }
+  return changes;
 }
 
 function pairMethod(){
@@ -187,6 +199,8 @@ function pairMethod(){
           }
         }
        }
+
+       
        if (storeArray.length==3){
         if (numObjects[storeArray[0]].horiL==numObjects[storeArray[1]].horiL && numObjects[storeArray[0]].horiL==numObjects[storeArray[2]].horiL){
           hori=numObjects[storeArray[0]].horiL;
@@ -214,19 +228,31 @@ function pairMethod(){
 }
 
 
-  function bruteMethod(){
+  function bruteMethod(){ //solving sudoku with guessing and backtracking if guess goes wrong.
     if(isComplete()) return true;
     for(let i=0; i<numObjects.length; i++){
       if(numObjects[i].number==0){
         for (let j=1; j<10; j++){
+          let changes=[];
+          let changes2=[];
           validSudoku=true;
           numObjects[i].setNumber(j);
+         // checkValid();         //in addition to guessing number (setNumber(j)) do the regular methods to speed up the solving (get to invalid sudoku faster with wrong guess)
+          crossMethod();
+          changes =lineMethod();
+          changes=changes.concat(oneSmallNum());
           checkValid();
           if(validSudoku){
             if(bruteMethod())return true;
           }
-          numObjects[i].setNumber(0);
-          validSudoku=true;
+          numObjects[i].setNumber(0);     //here a guess has gone wrong so we set the guess to 0. also set the smallNum and changes back to 0 because they were created from the wrong guess
+          for(let h=0;h<numObjects.length; h++){
+            if(numObjects[h].number==0)numObjects[h].smallNum=[true,true,true,true,true,true,true,true,true];
+          }
+          for(let k=0; k<changes.length; k++){
+           numObjects[changes[k][0]].setNumber(0);
+          }
+          validSudoku=false;
         }return false;
       }
     }

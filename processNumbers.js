@@ -5,7 +5,6 @@ function createNumberSlot(x,y,number,hori,vert,boxB){
     this.y=y;
     this.empty=false;
     this.number=number;
-    this.solved=false;
     this.smallNum=[false,false,false,false,false,false,false,false,false];
     this.horiL=hori;
     this.vertL=vert;
@@ -16,9 +15,6 @@ function createNumberSlot(x,y,number,hori,vert,boxB){
 
     if(number==0){
         this.smallNum=[true,true,true,true,true,true,true,true,true];
-    }
-    if(number>0 && number<10){
-        this.solved=true;
     }
 
      this.show = function(){
@@ -62,7 +58,6 @@ function createNumberSlot(x,y,number,hori,vert,boxB){
         if(number==0){
             this.smallNum=[true,true,true,true,true,true,true,true,true];
         }
-        this.solved=true;
         this.empty=false;
      }
  }
