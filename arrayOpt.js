@@ -1,72 +1,65 @@
 "use strict";
-function checkValid(){  //To do make the loop start with numObjects to make execution faster.
-      let found= 0;
-      let i=1;
-      let l;
-      let j;
-      validSudoku=true;
-      let jSave=0;
 
+function checkValid(){ 
+  let found1= 0;
+  let found2= 0;
+  let found3= 0;
+  let jSave1=0;
+  let jSave2=0;
+  let jSave3=0;
+  validSudoku=true;
 
-      for(i=1; i<10; i++){ //all numbers
-        jSave=0;
-        for(l=1; l<10; l++){ //all horisontal lines
-          found=0;
-          for(j=0; j<numObjects.length; j++){ // all objects
-            if(numObjects[j].number==i && numObjects[j].horiL==l){
-              found++;
-              numObjects[j].invalidH=true;
-              jSave=j;
-             }
-          }
-          if(found==1){
-            numObjects[jSave].invalidH=false;
-            
-       }else if(found>1){
-        validSudoku=false;
-       }
+  for(let i=1; i<10; i++){ //all numbers
+    for(let l=1; l<10; l++){ // this is vert/hori line or box depending what is checked.
+      found1=0;
+      found2=0;
+      found3=0;
+      jSave1=0;
+      jSave2=0;
+      jSave3=0;
+      for(let j=0; j<numObjects.length; j++){  // loops all spots
+        if(numObjects[j].number==i && numObjects[j].horiL==l){ // these next 3 if statements adds counter for each number found in line/box
+          found1++;                                          // when found it sets it false and remembers jSave so if there was only 1 it can reset it back
+          numObjects[j].invalidH=true;
+          jSave1=j;
         }
-        
-        jSave=0;
-        for(l=1; l<10; l++){ //all vertical columns
-          found=0;
-          for(j=0; j<numObjects.length; j++){ // all objects
-            if(numObjects[j].number==i && numObjects[j].vertL==l){
-              found++;
-              numObjects[j].invalidV=true;
-              jSave=j;
-            }
-          }
-          if(found==1){
-            numObjects[jSave].invalidV=false;
-       }else if(found>1){
-        validSudoku=false;
-       }
+        if(numObjects[j].number==i && numObjects[j].vertL==l){
+          found2++;
+          numObjects[j].invalidV=true;
+          jSave2=j;
         }
-        jSave=0;
-        for(l=1; l<10; l++){ //all boxes
-          found=0;
-          for(j=0; j<numObjects.length; j++){ // all objects
-            if(numObjects[j].number==i && numObjects[j].boxB==l){
-              found++;
-              numObjects[j].invalidB=true;
-              jSave=j;
-            }
-          }
-          if(found==1){
-            numObjects[jSave].invalidB=false;
-       }else if(found>1){
-        validSudoku=false;
-       }
+        if(numObjects[j].number==i && numObjects[j].boxB==l){
+          found3++;
+          numObjects[j].invalidB=true;
+          jSave3=j;
         }
       }
+          
+      if(found1==1){
+        numObjects[jSave1].invalidH=false;
+      }else if(found1>1){
+        validSudoku=false;
+      }
+
+      if(found2==1){
+        numObjects[jSave2].invalidV=false;
+      }else if(found2>1){
+        validSudoku=false;
+      }
+
+      if(found3==1){
+        numObjects[jSave3].invalidB=false;
+      }else if(found3>1){
+        validSudoku=false;
+      }
+    }
+  }
 }
 
 function oneSmallNum(){
   if(!validSudoku)return [];
   let changes=[];
   let changeDetails=[];
-
   let adder=0;
   let saved=null;
   for(let i=0; i<numObjects.length; i++){
@@ -86,17 +79,15 @@ function oneSmallNum(){
   }
   return changes;
 }
+
 function crossMethod(){
   if(!validSudoku)return
   for(let i=0; i<numObjects.length; i++){ //loops all spots
-     
-        for(let j=0; j<numObjects.length; j++){ //loops all for one spot to remove smallNums
-            if(j!=i && numObjects[j].horiL==numObjects[i].horiL ||numObjects[j].vertL==numObjects[i].vertL || numObjects[j].boxB==numObjects[i].boxB ){ //has to have same vert/hori line to remove
-              numObjects[j].smallNum[numObjects[i].number-1]=false;
-            }
-
-        
+    for(let j=0; j<numObjects.length; j++){ //loops all for one spot to remove smallNums
+      if(j!=i && numObjects[j].horiL==numObjects[i].horiL ||numObjects[j].vertL==numObjects[i].vertL || numObjects[j].boxB==numObjects[i].boxB ){ //has to have same vert/hori line to remove
+        numObjects[j].smallNum[numObjects[i].number-1]=false;
       }
+    }
   }
 }
 
@@ -134,7 +125,6 @@ function lineMethod(){
           boxS=i;
         }
 
-     
       }
       if(timesHori==1 && numObjects[horiS].number==0){  //&& numObjects[horiS].number==0  was added just so changes -array doesn't have results that already had a number
         numObjects[horiS].setNumber(j+1);
@@ -170,32 +160,29 @@ function pairMethod(){
   for(let j=0; j<9; j++){  //loop numbers
     for(let k=1; k<10; k++){   //loop boxes
       for(let i=0; i<numObjects.length; i++){ //loop objects
-
-         if(numObjects[i].number==j+1 && numObjects[i].boxB==k || numObjects[i].smallNum[j] && numObjects[i].boxB==k){  //counts all smallnumber j:s in box k and saves the locations in array
+        if(numObjects[i].number==j+1 && numObjects[i].boxB==k || numObjects[i].smallNum[j] && numObjects[i].boxB==k){  //counts all smallnumber j:s in box k and saves the locations in array
           storeArray.push(i);
           count++;
-          
+        }
       }
-    }
-   
-    if (count>1 && count <4){   // 2 or 3 smallNum j in box k ==> pairMethod possible if they are all lined vertically or horizontally
-      //next 4 sections are practically the same but 2/3 numbers and hori/vert line
+      if (count>1 && count <4){   // 2 or 3 smallNumbers j in box k ==> pairMethod possible if they are all lined vertically or horizontally
+                                  //next 4 sections are practically the same but 2/3 numbers and hori/vert line
        if (storeArray.length==2){ //smallNums in hori/vert line inside box. 2 or 3
         if (numObjects[storeArray[0]].horiL ==numObjects[storeArray[1]].horiL){  //smallNums are horizontal
-            hori=numObjects[storeArray[0]].horiL;
-            for(let i=0; i<numObjects.length; i++){
-                if(numObjects[i].horiL==hori && i!=storeArray[0] && i!=storeArray[1]){ //removes smallNums J from the horizontal line but not the original 2
-                    numObjects[i].smallNum[j]=false;
-                }
+          hori=numObjects[storeArray[0]].horiL;
+          for(let i=0; i<numObjects.length; i++){
+            if(numObjects[i].horiL==hori && i!=storeArray[0] && i!=storeArray[1]){ //removes smallNums J from the horizontal line but not the original 2
+              numObjects[i].smallNum[j]=false;
             }
+          }
         }
 
         if (numObjects[storeArray[0]].vertL ==numObjects[storeArray[1]].vertL){
           vert=numObjects[storeArray[0]].vertL;
           for(let i=0; i<numObjects.length; i++){
-              if(numObjects[i].vertL==vert && i!=storeArray[0] && i!=storeArray[1]){
-                  numObjects[i].smallNum[j]=false;
-              }
+            if(numObjects[i].vertL==vert && i!=storeArray[0] && i!=storeArray[1]){
+              numObjects[i].smallNum[j]=false;
+            }
           }
         }
        }
@@ -205,74 +192,69 @@ function pairMethod(){
         if (numObjects[storeArray[0]].horiL==numObjects[storeArray[1]].horiL && numObjects[storeArray[0]].horiL==numObjects[storeArray[2]].horiL){
           hori=numObjects[storeArray[0]].horiL;
           for(let i=0; i<numObjects.length; i++){
-              if(numObjects[i].horiL==hori && i!=storeArray[0] && i!=storeArray[1] && i!=storeArray[2]){
-                  numObjects[i].smallNum[j]=false;
-              }
+            if(numObjects[i].horiL==hori && i!=storeArray[0] && i!=storeArray[1] && i!=storeArray[2]){
+              numObjects[i].smallNum[j]=false;
+            }
           }      
         }
         if (numObjects[storeArray[0]].vertL ==numObjects[storeArray[1]].vertL && numObjects[storeArray[0]].vertL==numObjects[storeArray[2]].vertL){
           vert=numObjects[storeArray[0]].vertL;
           for(let i=0; i<numObjects.length; i++){
-              if(numObjects[i].vertL==vert && i!=storeArray[0] && i!=storeArray[1] && i!=storeArray[2]){
-                  numObjects[i].smallNum[j]=false;
-              }
+            if(numObjects[i].vertL==vert && i!=storeArray[0] && i!=storeArray[1] && i!=storeArray[2]){
+              numObjects[i].smallNum[j]=false;
+            }
           }         
         }
        }
-    } 
+      } 
     storeArray=[];
     count=0;
-      
     }
   }
 }
 
 
-  function bruteMethod(){ //solving sudoku with guessing and backtracking if guess goes wrong.
-    if(isComplete()) return true;
-    for(let i=0; i<numObjects.length; i++){
-      if(numObjects[i].number==0){
-        for (let j=1; j<10; j++){
-          let changes=[];
-          let changes2=[];
-          validSudoku=true;
-          numObjects[i].setNumber(j);
-         // checkValid();         //in addition to guessing number (setNumber(j)) do the regular methods to speed up the solving (get to invalid sudoku faster with wrong guess)
-          crossMethod();
-          changes =lineMethod();
-          changes=changes.concat(oneSmallNum());
-          checkValid();
-          if(validSudoku){
-            if(bruteMethod())return true;
-          }
-          numObjects[i].setNumber(0);     //here a guess has gone wrong so we set the guess to 0. also set the smallNum and changes back to 0 because they were created from the wrong guess
-          for(let h=0;h<numObjects.length; h++){
-            if(numObjects[h].number==0)numObjects[h].smallNum=[true,true,true,true,true,true,true,true,true];
-          }
-          for(let k=0; k<changes.length; k++){
-           numObjects[changes[k][0]].setNumber(0);
-          }
-          validSudoku=false;
-        }return false;
-      }
+function bruteMethod(){ //solving sudoku with guessing and backtracking if guess goes wrong.
+  if(isComplete()) return true;
+  for(let i=0; i<numObjects.length; i++){
+    if(numObjects[i].number==0){
+      for (let j=1; j<10; j++){
+        let changes=[];
+        let changes2=[];
+        validSudoku=true;
+        numObjects[i].setNumber(j);
+        //in addition to guessing number (setNumber(j)) do the regular methods to speed up the solving (get to invalid sudoku faster with wrong guess)
+        crossMethod();
+        changes =lineMethod();
+        changes=changes.concat(oneSmallNum());
+        checkValid();
+        if(validSudoku){
+          if(bruteMethod())return true;
+        }
+        numObjects[i].setNumber(0);     //here a guess has gone wrong so we set the guess to 0. also set the smallNum and changes back to 0 because they were created from the wrong guess
+        for(let h=0;h<numObjects.length; h++){
+          if(numObjects[h].number==0)numObjects[h].smallNum=[true,true,true,true,true,true,true,true,true];
+        }
+        for(let k=0; k<changes.length; k++){
+          numObjects[changes[k][0]].setNumber(0);
+        }
+        validSudoku=false;
+      }return false;
     }
   }
-
-
+}
 
 
 function isComplete(){
-
   if(!validSudoku) return false
-  
   let count=0;
   for(let i=0; i<numObjects.length; i++){
     if(numObjects[i].number!=0){
       count++;
     }
   }
-     if (count==81){
-      return true;
-    }
-    return false;
+  if (count==81){
+    return true;
+  }
+  return false;
 }
