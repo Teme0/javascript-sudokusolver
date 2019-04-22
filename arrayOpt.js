@@ -213,7 +213,91 @@ function pairMethod(){
   }
 }
 
+function hiddenPairs(){
+  if(!validSudoku)return
+  crossMethod();  //must do this first or you can get invalid smallNums. TODO: remove this line and make this methods button only active when crossmethod has been pressed
+  let horiS=[];
+  let vertS=[];
+  let boxS=[];
+  horiS.push([],[],[],[],[],[],[],[],[]);
+  vertS.push([],[],[],[],[],[],[],[],[]);
+  boxS.push([],[],[],[],[],[],[],[],[]);
+  let combined=[];
 
+  for(let k=1; k<10; k++){//loop lines/boxes and each line/box executes the method findPairs
+    for(let j=0; j<9; j++){  //loop numbers
+      for(let i=0; i<numObjects.length; i++){ //loop objects
+        if(numObjects[i].smallNum[j]&& numObjects[i].horiL==k){
+            horiS[j].push(i);
+        }
+        if(numObjects[i].smallNum[j]&& numObjects[i].vertL==k){
+          vertS[j].push(i);
+        
+        }
+        if(numObjects[i].smallNum[j]&& numObjects[i].boxB==k){
+        boxS[j].push(i);
+      
+        }
+      }
+    }
+    combined.push(horiS,vertS,boxS);
+    findPairs();
+    combined=[];
+    horiS=[];
+    vertS=[];
+    boxS=[];
+    horiS.push([],[],[],[],[],[],[],[],[]);
+    vertS.push([],[],[],[],[],[],[],[],[]);
+    boxS.push([],[],[],[],[],[],[],[],[]);
+
+  } 
+
+ function findPairs(){
+  let same = true;
+  let sameLength=0;
+  let count=1;
+  let saveNums=[];
+  let found=false;
+
+  for (let c=0; c<3; c++){ //0=horisontal , 1=vertical, 2 =box checking.
+
+  
+  for (let i=0; i<9; i++){  //all numbers
+    if(combined[c][i].length>1 && combined[c][i].length<=4){  //the line/box has a number i that fits only in 1-4 spots. if >1 is set to >0 this actually also becomes lineMethod, but its cooler this way.
+      saveNums.push(i);                           //this array has the numbers from pairs so we know what to remove from smallNums
+      sameLength=combined[c][i].length;                 //saves the length so we know if we are looking for pairs, 3s or 4s.
+      for(let j=0; j<9; j++){                      //loops through numbers trying to find another number that fits in the same amount of spots as i
+        if(j!=i && combined[c][j].length==combined[c][i].length){//finds possible pair
+          for(let k=0; k<combined[c][i].length; k++){  //checks if the possible pair has the exact same spots it can go to
+            if(combined[c][i][k]!=combined[c][j][k]){
+              same=false;
+            }
+          }
+          if(same){
+            count++;
+            saveNums.push(j);
+          }
+          same=true;
+        }
+      }
+      if(count==sameLength){      //we found count amount of numbers (2-4) that fit in count amount of spots in the same line/box. 
+        for(let l=0; l<9; l++){   //all numbers
+          for(let u=0; u<sameLength; u++){  //loops through spots (1-4)
+            for(let y=0; y<saveNums.length; y++){  //loops through numbers that the pairs have in common
+             if(saveNums[y]==l) found=true;
+          }
+          if(!found) numObjects[combined[c][i][u]].smallNum[l]=false;  //removes all numbers from smallNum that are not the same as the ones in pairs
+        }
+        found=false;
+        } 
+      }
+      count=1;
+      saveNums=[];
+    }
+  }
+}
+ }
+}
 function bruteMethod(){ //solving sudoku with guessing and backtracking if guess goes wrong.
   if(isComplete()) return true;
   for(let i=0; i<numObjects.length; i++){

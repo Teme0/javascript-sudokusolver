@@ -103,6 +103,27 @@
     cursor: pointer;
   }
   
+  .hiddenPairs:hover {
+    background-color: blue;
+    color: white;
+  }
+  .hiddenPairs {
+    background-color: white; 
+    color: black; 
+    border: 2px solid blue;
+    position: absolute;
+    top: 517px; left: 415px;
+    padding: 12px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+
   .bruteMethod:hover {
     background-color: green;
     color: white;
